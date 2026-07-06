@@ -4,12 +4,35 @@ Reusable Android and SwiftUI navigation primitives extracted from Motormed.
 
 The Android package/namespace is `one.adverse.glider`. The Swift package module is `GliderNav`.
 
+<p>
+  <img src="docs/media/glider-nav-center.png" alt="GliderNav center panel screenshot" width="49%">
+  <img src="docs/media/glider-nav-panels.png" alt="GliderNav sliding panels screenshot" width="49%">
+</p>
+
+Demo video: [docs/media/glider-nav-demo.mp4](docs/media/glider-nav-demo.mp4)
+
 ## What It Includes
 
 - `GliderScaffold`: three-column slider shell with left panel, center content, and right panel.
 - `GliderPager`: top tab row plus swipeable page content.
 - `GliderTabIndicator`: animated gradient tab indicator.
 - `GliderSlider` / `GliderGradientSlider`: gamma-aware gradient slider used for non-linear ranges.
+
+## Samples
+
+Android sample app:
+
+```bash
+./gradlew :samples:android:installDebug
+```
+
+iOS sample app source lives at:
+
+```text
+samples/ios/GliderNavSample
+```
+
+Create a new iOS app target in Xcode, add this repo as a local Swift package, then add the sample Swift files to the app target.
 
 ## Android
 
@@ -48,6 +71,7 @@ Build locally:
 
 ```bash
 ./gradlew :glider-nav-android:assembleDebug
+./gradlew :samples:android:assembleDebug
 ```
 
 Publish to Maven local:

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">GliderNav center panel screenshot</title>
+  <desc id="desc">A dark mobile dashboard with three tabs, cards, and green to pink accent gradients.</desc>
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#39d67d"/>
+      <stop offset="1" stop-color="#ff2f8f"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#111228"/>
+      <stop offset="1" stop-color="#181936"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="#080914"/>
+  <g>
+    <rect x="308" y="44" width="584" height="672" rx="42" fill="url(#screen)" stroke="#31324d" stroke-width="2"/>
+    <rect x="330" y="66" width="540" height="628" rx="30" fill="#111228"/>
+  </g>
+  <text x="392" y="130" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800">Controls</text>
+  <text x="600" y="132" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="900" text-anchor="middle">GliderNav</text>
+  <text x="808" y="130" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800" text-anchor="end">Ride</text>
+
+  <g transform="translate(350 174)">
+    <text x="77" y="35" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" text-anchor="middle">Monitor</text>
+    <text x="250" y="35" fill="#b8b9d0" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle">Settings</text>
+    <text x="423" y="35" fill="#b8b9d0" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle">Battery</text>
+    <rect x="0" y="62" width="154" height="5" rx="2.5" fill="url(#accent)"/>
+  </g>
+
+  <g transform="translate(358 274)">
+    <rect width="226" height="132" rx="24" fill="#ffffff" opacity="0.10" stroke="#ffffff" stroke-opacity="0.13"/>
+    <text x="24" y="38" fill="#b8b9d0" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800">SPEED</text>
+    <text x="24" y="102" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="66" font-weight="900">42</text>
+    <text x="106" y="101" fill="#40e29a" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">mph</text>
+  </g>
+  <g transform="translate(616 274)">
+    <rect width="226" height="132" rx="24" fill="#ffffff" opacity="0.10" stroke="#ffffff" stroke-opacity="0.13"/>
+    <text x="24" y="38" fill="#b8b9d0" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800">BATTERY</text>
+    <text x="24" y="102" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="66" font-weight="900">78</text>
+    <text x="106" y="101" fill="#40e29a" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">%</text>
+  </g>
+  <g transform="translate(358 430)">
+    <rect width="226" height="132" rx="24" fill="#ffffff" opacity="0.10" stroke="#ffffff" stroke-opacity="0.13"/>
+    <text x="24" y="38" fill="#b8b9d0" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800">MOTOR</text>
+    <text x="24" y="102" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="900">109</text>
+    <text x="136" y="101" fill="#40e29a" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">F</text>
+  </g>
+  <g transform="translate(616 430)">
+    <rect width="226" height="132" rx="24" fill="#ffffff" opacity="0.10" stroke="#ffffff" stroke-opacity="0.13"/>
+    <text x="24" y="38" fill="#b8b9d0" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800">CONTROLLER</text>
+    <text x="24" y="102" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="900">101</text>
+    <text x="136" y="101" fill="#40e29a" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">F</text>
+  </g>
+  <g transform="translate(358 590)">
+    <rect width="484" height="86" rx="24" fill="url(#accent)"/>
+    <text x="24" y="38" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900">Sliding panels, swipe tabs,</text>
+    <text x="24" y="66" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900">and non-linear controls.</text>
+  </g>
+</svg>

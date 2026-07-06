@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">GliderNav sliding panels screenshot</title>
+  <desc id="desc">A three-column sliding shell with the center surface offset between left and right panels.</desc>
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#39d67d"/>
+      <stop offset="1" stop-color="#ff2f8f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="#080914"/>
+  <g transform="translate(84 90)">
+    <rect width="284" height="580" rx="32" fill="#171832"/>
+    <circle cx="54" cy="72" r="29" fill="#39d67d"/>
+    <text x="28" y="134" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="900">Controller</text>
+    <g fill="#ffffff" opacity="0.08">
+      <rect x="28" y="172" width="228" height="58" rx="16"/>
+      <rect x="28" y="250" width="228" height="58" rx="16"/>
+      <rect x="28" y="328" width="228" height="58" rx="16"/>
+      <rect x="28" y="406" width="228" height="58" rx="16"/>
+    </g>
+    <g fill="#e6e4f2" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">
+      <text x="52" y="208">Telemetry</text>
+      <text x="52" y="286">Settings</text>
+      <text x="52" y="364">Profiles</text>
+      <text x="52" y="442">Export</text>
+    </g>
+  </g>
+  <g transform="translate(832 90)">
+    <rect width="284" height="580" rx="32" fill="#171832"/>
+    <circle cx="54" cy="72" r="29" fill="#ff2f8f"/>
+    <text x="28" y="134" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="900">Ride Tools</text>
+    <g fill="#ffffff" opacity="0.08">
+      <rect x="28" y="172" width="228" height="58" rx="16"/>
+      <rect x="28" y="250" width="228" height="58" rx="16"/>
+      <rect x="28" y="328" width="228" height="58" rx="16"/>
+      <rect x="28" y="406" width="228" height="58" rx="16"/>
+    </g>
+    <g fill="#e6e4f2" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">
+      <text x="52" y="208">Record</text>
+      <text x="52" y="286">Widgets</text>
+      <text x="52" y="364">Social Video</text>
+      <text x="52" y="442">Share</text>
+    </g>
+  </g>
+  <g transform="translate(314 48)">
+    <rect width="572" height="664" rx="42" fill="#111228" stroke="#31324d" stroke-width="2"/>
+    <text x="286" y="84" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="900" text-anchor="middle">Center Content</text>
+    <rect x="58" y="126" width="456" height="5" rx="2.5" fill="url(#accent)"/>
+    <g transform="translate(56 178)">
+      <text x="0" y="0" fill="#b8b9d0" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800">ASSIST</text>
+      <text x="456" y="0" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" text-anchor="end">48%</text>
+      <rect x="0" y="28" width="456" height="22" rx="11" fill="url(#accent)"/>
+      <circle cx="230" cy="39" r="22" fill="#ffffff"/>
+    </g>
+    <g transform="translate(56 278)">
+      <text x="0" y="0" fill="#b8b9d0" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800">REGEN</text>
+      <text x="456" y="0" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" text-anchor="end">22%</text>
+      <rect x="0" y="28" width="456" height="22" rx="11" fill="url(#accent)"/>
+      <circle cx="112" cy="39" r="22" fill="#ffffff"/>
+    </g>
+    <g transform="translate(56 400)">
+      <rect width="456" height="132" rx="24" fill="#ffffff" opacity="0.10" stroke="#ffffff" stroke-opacity="0.13"/>
+      <text x="28" y="48" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">One shell.</text>
+      <text x="28" y="86" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">Two panels.</text>
+    </g>
+  </g>
+</svg>
