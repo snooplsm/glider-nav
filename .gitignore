@@ -1,0 +1,9 @@
+.gradle/
+.build/
+build/
+**/build/
+.idea/
+.DS_Store
+*.xcuserdata
+.swiftpm/
+Package.resolved
