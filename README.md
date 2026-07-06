@@ -4,12 +4,11 @@ Reusable Android and SwiftUI navigation primitives extracted from Motormed.
 
 The Android package/namespace is `one.adverse.glider`. The Swift package module is `GliderNav`.
 
-<p>
-  <img src="docs/media/glider-nav-center.png" alt="GliderNav center panel screenshot" width="49%">
-  <img src="docs/media/glider-nav-panels.png" alt="GliderNav sliding panels screenshot" width="49%">
-</p>
+## Demo
 
-Demo video: [docs/media/glider-nav-demo.mp4](docs/media/glider-nav-demo.mp4)
+<video src="docs/media/glider-nav-android.mp4" controls muted playsinline width="360"></video>
+
+[Open the Android emulator demo](docs/media/glider-nav-android.mp4)
 
 ## What It Includes
 
