@@ -58,7 +58,7 @@ Then add the dependency:
 
 ```kotlin
 dependencies {
-    implementation("one.adverse.glider:glider-nav:0.1.1")
+    implementation("one.adverse.glider:glider-nav:0.1.2")
 }
 ```
 
@@ -116,7 +116,7 @@ GITHUB_ACTOR=snooplsm GITHUB_TOKEN=<token-with-write-packages> \
 Coordinate:
 
 ```kotlin
-implementation("one.adverse.glider:glider-nav:0.1.1")
+implementation("one.adverse.glider:glider-nav:0.1.2")
 ```
 
 ## SwiftUI
@@ -127,7 +127,7 @@ Add the Swift package in Xcode:
 https://github.com/snooplsm/glider-nav
 ```
 
-Choose version `0.1.1` or newer, then import the module:
+Choose version `0.1.2` or newer, then import the module:
 
 ```swift
 import GliderNav
@@ -137,7 +137,7 @@ Or add it to `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/snooplsm/glider-nav.git", from: "0.1.1")
+    .package(url: "https://github.com/snooplsm/glider-nav.git", from: "0.1.2")
 ],
 targets: [
     .target(

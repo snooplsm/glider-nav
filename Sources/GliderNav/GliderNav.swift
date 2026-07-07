@@ -76,6 +76,7 @@ public struct GliderTab: Identifiable, Hashable {
 public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: View {
     @ObservedObject private var state: GliderScaffoldState
     private let drawerWidth: CGFloat
+    private let edgeSwipeWidth: CGFloat
     private let gesturesEnabled: Bool
     private let theme: GliderTheme
     private let leftPanel: () -> LeftPanel
@@ -86,6 +87,7 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
     public init(
         state: GliderScaffoldState,
         drawerWidth: CGFloat = 280,
+        edgeSwipeWidth: CGFloat = 56,
         gesturesEnabled: Bool = true,
         theme: GliderTheme = GliderTheme(),
         @ViewBuilder leftPanel: @escaping () -> LeftPanel,
@@ -94,6 +96,7 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
     ) {
         _state = ObservedObject(wrappedValue: state)
         self.drawerWidth = drawerWidth
+        self.edgeSwipeWidth = edgeSwipeWidth
         self.gesturesEnabled = gesturesEnabled
         self.theme = theme
         self.leftPanel = leftPanel
@@ -121,6 +124,14 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
                 }
 
                 centerContent(offset: currentOffset)
+
+                if gesturesEnabled && state.panel == .center {
+                    edgeDragTargets
+                }
+
+                if gesturesEnabled && state.panel != .center {
+                    centerDragOverlay(offset: currentOffset)
+                }
             }
             .background(theme.background.ignoresSafeArea())
             .animation(.easeInOut(duration: 0.22), value: state.panel)
@@ -146,10 +157,84 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
             .offset(x: offset)
 
         if gesturesEnabled {
-            content.gesture(gliderDragGesture)
+            content.gliderPanelDragTarget(
+                state: state,
+                drawerWidth: drawerWidth,
+                dragOffset: $dragOffset
+            )
         } else {
             content
         }
+    }
+
+    private var edgeDragTargets: some View {
+        HStack(spacing: 0) {
+            Color.clear
+                .frame(width: edgeSwipeWidth)
+                .contentShape(Rectangle())
+                .gliderPanelDragTarget(
+                    state: state,
+                    drawerWidth: drawerWidth,
+                    dragOffset: $dragOffset
+                )
+
+            Spacer(minLength: 0)
+
+            Color.clear
+                .frame(width: edgeSwipeWidth)
+                .contentShape(Rectangle())
+                .gliderPanelDragTarget(
+                    state: state,
+                    drawerWidth: drawerWidth,
+                    dragOffset: $dragOffset
+                )
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func centerDragOverlay(offset: CGFloat) -> some View {
+        Color.clear
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .contentShape(Rectangle())
+            .offset(x: offset)
+            .gliderPanelDragTarget(
+                state: state,
+                drawerWidth: drawerWidth,
+                dragOffset: $dragOffset
+            )
+    }
+}
+
+private struct GliderPanelDragTargetModifier: ViewModifier {
+    @ObservedObject private var state: GliderScaffoldState
+    private let drawerWidth: CGFloat
+    @Binding private var dragOffset: CGFloat
+
+    init(
+        state: GliderScaffoldState,
+        drawerWidth: CGFloat,
+        dragOffset: Binding<CGFloat>
+    ) {
+        _state = ObservedObject(wrappedValue: state)
+        self.drawerWidth = drawerWidth
+        _dragOffset = dragOffset
+    }
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        content.gesture(gliderDragGesture)
+    }
+
+    private var baseOffset: CGFloat {
+        switch state.panel {
+        case .left: return drawerWidth
+        case .center: return 0
+        case .right: return -drawerWidth
+        }
+    }
+
+    private func clampedOffset(_ offset: CGFloat) -> CGFloat {
+        min(drawerWidth, max(-drawerWidth, offset))
     }
 
     private var gliderDragGesture: some Gesture {
@@ -175,6 +260,22 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
                     dragOffset = 0
                 }
             }
+    }
+}
+
+private extension View {
+    func gliderPanelDragTarget(
+        state: GliderScaffoldState,
+        drawerWidth: CGFloat,
+        dragOffset: Binding<CGFloat>
+    ) -> some View {
+        modifier(
+            GliderPanelDragTargetModifier(
+                state: state,
+                drawerWidth: drawerWidth,
+                dragOffset: dragOffset
+            )
+        )
     }
 }
 

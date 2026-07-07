@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "one.adverse.glider"
-version = "0.1.1"
+version = "0.1.2"
 
 android {
     namespace = "one.adverse.glider"
