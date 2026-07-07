@@ -299,6 +299,7 @@ private fun SamplePanel(title: String, color: Color) {
         modifier = Modifier
             .fillMaxHeight()
             .background(Color(0xFF171832))
+            .systemBarsPadding()
             .padding(22.dp)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(18.dp),
