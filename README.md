@@ -8,8 +8,6 @@ The Android package/namespace is `one.adverse.glider`. The Swift package module 
 
 <video src="docs/media/glider-nav-android.mp4" controls muted playsinline width="360"></video>
 
-[Open the Android emulator demo](docs/media/glider-nav-android.mp4)
-
 ## What It Includes
 
 - `GliderScaffold`: three-column slider shell with left panel, center content, and right panel.
