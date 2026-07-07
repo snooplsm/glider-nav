@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "one.adverse.glider"
-version = "0.1.0"
+version = "0.1.1"
 
 android {
     namespace = "one.adverse.glider"
@@ -55,6 +55,23 @@ publishing {
 
             afterEvaluate {
                 from(components["release"])
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/snooplsm/glider-nav")
+            credentials {
+                username = providers.environmentVariable("GITHUB_ACTOR")
+                    .orElse(providers.gradleProperty("gpr.user"))
+                    .orElse("snooplsm")
+                    .get()
+                password = providers.environmentVariable("GITHUB_TOKEN")
+                    .orElse(providers.gradleProperty("gpr.key"))
+                    .orElse("")
+                    .get()
             }
         }
     }

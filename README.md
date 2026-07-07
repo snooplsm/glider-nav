@@ -33,6 +33,35 @@ Create a new iOS app target in Xcode, add this repo as a local Swift package, th
 
 ## Android
 
+Add the GitHub Packages Maven repository in your app's `settings.gradle.kts`:
+
+```kotlin
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/snooplsm/glider-nav")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR") ?: "YOUR_GITHUB_USERNAME"
+                password = System.getenv("GITHUB_TOKEN") ?: "YOUR_GITHUB_TOKEN"
+            }
+        }
+    }
+}
+```
+
+GitHub Packages requires a GitHub token for Maven access. Use `read:packages` when consuming the library and `write:packages` when publishing it.
+
+Then add the dependency:
+
+```kotlin
+dependencies {
+    implementation("one.adverse.glider:glider-nav:0.1.1")
+}
+```
+
 ```kotlin
 import one.adverse.glider.GliderPager
 import one.adverse.glider.GliderScaffold
@@ -77,13 +106,48 @@ Publish to Maven local:
 ./gradlew :glider-nav-android:publishToMavenLocal
 ```
 
+Publish to GitHub Packages:
+
+```bash
+GITHUB_ACTOR=snooplsm GITHUB_TOKEN=<token-with-write-packages> \
+  ./gradlew :glider-nav-android:publishReleasePublicationToGitHubPackagesRepository
+```
+
 Coordinate:
 
 ```kotlin
-implementation("one.adverse.glider:glider-nav:0.1.0")
+implementation("one.adverse.glider:glider-nav:0.1.1")
 ```
 
 ## SwiftUI
+
+Add the Swift package in Xcode:
+
+```text
+https://github.com/snooplsm/glider-nav
+```
+
+Choose version `0.1.1` or newer, then import the module:
+
+```swift
+import GliderNav
+```
+
+Or add it to `Package.swift`:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/snooplsm/glider-nav.git", from: "0.1.1")
+],
+targets: [
+    .target(
+        name: "YourApp",
+        dependencies: [
+            .product(name: "GliderNav", package: "glider-nav")
+        ]
+    )
+]
+```
 
 ```swift
 import GliderNav
