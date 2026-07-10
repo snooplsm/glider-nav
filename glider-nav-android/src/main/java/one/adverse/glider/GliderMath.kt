@@ -34,3 +34,14 @@ internal fun sliderPositionToValue(
     val p = position.coerceIn(0f, 1f)
     return min + (p.toDouble().pow(exp.toDouble()).toFloat() * range)
 }
+
+internal fun settledGliderPanel(releasedOffsetPx: Float, drawerWidthPx: Float): GliderPanel {
+    if (drawerWidthPx <= 0f || drawerWidthPx.isNaN()) return GliderPanel.Center
+
+    val threshold = drawerWidthPx * 0.30f
+    return when {
+        releasedOffsetPx > threshold -> GliderPanel.Left
+        releasedOffsetPx < -threshold -> GliderPanel.Right
+        else -> GliderPanel.Center
+    }
+}

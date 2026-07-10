@@ -239,14 +239,7 @@ private fun Modifier.gliderPanelDragTarget(
     return pointerInput(enabled, drawerWidthPx) {
         fun settleDrag() {
             val releasedOffset = currentOffsetPx().coerceIn(-drawerWidthPx, drawerWidthPx)
-            val threshold = drawerWidthPx * 0.30f
-            onSettle(
-                when {
-                    releasedOffset > threshold -> GliderPanel.Left
-                    releasedOffset < -threshold -> GliderPanel.Right
-                    else -> GliderPanel.Center
-                },
-            )
+            onSettle(settledGliderPanel(releasedOffset, drawerWidthPx))
         }
 
         fun shouldYieldToPager(startX: Float, dragX: Float): Boolean {

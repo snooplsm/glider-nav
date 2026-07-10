@@ -26,4 +26,12 @@ class GliderMathTest {
         assertEquals(0f, sliderPositionToValue(-1f, 0f, 100f, 1f))
         assertEquals(100f, sliderPositionToValue(2f, 0f, 100f, 1f))
     }
+
+    @Test
+    fun gliderDragSettlesAfterThirtyPercentThreshold() {
+        assertEquals(GliderPanel.Center, settledGliderPanel(89f, 300f))
+        assertEquals(GliderPanel.Left, settledGliderPanel(91f, 300f))
+        assertEquals(GliderPanel.Right, settledGliderPanel(-91f, 300f))
+        assertEquals(GliderPanel.Center, settledGliderPanel(50f, 0f))
+    }
 }
