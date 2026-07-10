@@ -4,7 +4,7 @@
 
 | iOS | Android |
 | --- | --- |
-| <video src="docs/media/glider-nav-ios.mp4" controls muted playsinline width="360"></video> | <video src="docs/media/glider-nav-android.mp4" controls muted playsinline width="360"></video> |
+| <img src="docs/media/glider-nav-ios.gif" alt="GliderNav iOS demo" width="360"> | <img src="docs/media/glider-nav-android.gif" alt="GliderNav Android demo" width="360"> |
 
 Reusable Android and SwiftUI navigation primitives extracted from Motormed.
 
