@@ -22,7 +22,9 @@ import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
@@ -56,6 +58,21 @@ fun GliderPager(
     val safeSelectedIndex = selectedIndex.coerceIn(0, tabs.lastIndex)
     val pagerState = rememberPagerState(initialPage = safeSelectedIndex) { tabs.size }
     val scope = rememberCoroutineScope()
+    val gliderPagerSwipeState = LocalGliderPagerSwipeState.current
+    val canSwipePrevious = userScrollEnabled && pagerState.currentPage > 0
+    val canSwipeNext = userScrollEnabled && pagerState.currentPage < tabs.lastIndex
+
+    SideEffect {
+        gliderPagerSwipeState?.canSwipePrevious = canSwipePrevious
+        gliderPagerSwipeState?.canSwipeNext = canSwipeNext
+    }
+
+    DisposableEffect(gliderPagerSwipeState) {
+        onDispose {
+            gliderPagerSwipeState?.canSwipePrevious = false
+            gliderPagerSwipeState?.canSwipeNext = false
+        }
+    }
 
     LaunchedEffect(safeSelectedIndex, tabs.size) {
         if (pagerState.currentPage != safeSelectedIndex) {

@@ -93,6 +93,19 @@ GliderScaffold(
 }
 ```
 
+Let Android's system back gesture take priority at the screen edges:
+
+```kotlin
+GliderScaffold(
+    state = scaffoldState,
+    systemBackGestureExclusionEnabled = false,
+    leftPanel = { SettingsPanel() },
+    rightPanel = { RidePanel() },
+) { glider ->
+    AppContent()
+}
+```
+
 Build locally:
 
 ```bash

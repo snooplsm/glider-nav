@@ -82,7 +82,8 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
     private let leftPanel: () -> LeftPanel
     private let center: (GliderScaffoldState) -> Center
     private let rightPanel: () -> RightPanel
-    @State private var dragOffset: CGFloat = 0
+    @State private var currentOffset: CGFloat = 0
+    @State private var isDragging = false
 
     public init(
         state: GliderScaffoldState,
@@ -106,13 +107,13 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
 
     public var body: some View {
         GeometryReader { _ in
-            let currentOffset = clampedOffset(baseOffset + dragOffset)
+            let visibleOffset = clampedOffset(currentOffset)
 
             ZStack {
                 HStack(spacing: 0) {
                     leftPanel()
                         .frame(width: drawerWidth)
-                        .offset(x: -drawerWidth + max(0, currentOffset))
+                        .offset(x: -drawerWidth + max(0, visibleOffset))
                     Spacer(minLength: 0)
                 }
 
@@ -120,26 +121,34 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
                     Spacer(minLength: 0)
                     rightPanel()
                         .frame(width: drawerWidth)
-                        .offset(x: drawerWidth + min(0, currentOffset))
+                        .offset(x: drawerWidth + min(0, visibleOffset))
                 }
 
-                centerContent(offset: currentOffset)
+                centerContent(offset: visibleOffset)
 
                 if gesturesEnabled && state.panel == .center {
                     edgeDragTargets
                 }
 
                 if gesturesEnabled && state.panel != .center {
-                    centerDragOverlay(offset: currentOffset)
+                    centerDragOverlay(offset: visibleOffset)
                 }
             }
             .background(theme.background.ignoresSafeArea())
-            .animation(.easeInOut(duration: 0.22), value: state.panel)
+            .onAppear {
+                currentOffset = panelOffset(for: state.panel)
+            }
+            .onChange(of: state.panel) { panel in
+                guard !isDragging else { return }
+                withAnimation(.easeInOut(duration: 0.22)) {
+                    currentOffset = panelOffset(for: panel)
+                }
+            }
         }
     }
 
-    private var baseOffset: CGFloat {
-        switch state.panel {
+    private func panelOffset(for panel: GliderPanel) -> CGFloat {
+        switch panel {
         case .left: return drawerWidth
         case .center: return 0
         case .right: return -drawerWidth
@@ -160,7 +169,8 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
             content.gliderPanelDragTarget(
                 state: state,
                 drawerWidth: drawerWidth,
-                dragOffset: $dragOffset
+                currentOffset: $currentOffset,
+                isDragging: $isDragging
             )
         } else {
             content
@@ -175,7 +185,8 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
                 .gliderPanelDragTarget(
                     state: state,
                     drawerWidth: drawerWidth,
-                    dragOffset: $dragOffset
+                    currentOffset: $currentOffset,
+                    isDragging: $isDragging
                 )
 
             Spacer(minLength: 0)
@@ -186,7 +197,8 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
                 .gliderPanelDragTarget(
                     state: state,
                     drawerWidth: drawerWidth,
-                    dragOffset: $dragOffset
+                    currentOffset: $currentOffset,
+                    isDragging: $isDragging
                 )
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -200,7 +212,8 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
             .gliderPanelDragTarget(
                 state: state,
                 drawerWidth: drawerWidth,
-                dragOffset: $dragOffset
+                currentOffset: $currentOffset,
+                isDragging: $isDragging
             )
     }
 }
@@ -208,16 +221,20 @@ public struct GliderScaffold<LeftPanel: View, Center: View, RightPanel: View>: V
 private struct GliderPanelDragTargetModifier: ViewModifier {
     @ObservedObject private var state: GliderScaffoldState
     private let drawerWidth: CGFloat
-    @Binding private var dragOffset: CGFloat
+    @Binding private var currentOffset: CGFloat
+    @Binding private var isDragging: Bool
+    @State private var dragStartOffset: CGFloat?
 
     init(
         state: GliderScaffoldState,
         drawerWidth: CGFloat,
-        dragOffset: Binding<CGFloat>
+        currentOffset: Binding<CGFloat>,
+        isDragging: Binding<Bool>
     ) {
         _state = ObservedObject(wrappedValue: state)
         self.drawerWidth = drawerWidth
-        _dragOffset = dragOffset
+        _currentOffset = currentOffset
+        _isDragging = isDragging
     }
 
     @ViewBuilder
@@ -225,8 +242,8 @@ private struct GliderPanelDragTargetModifier: ViewModifier {
         content.gesture(gliderDragGesture)
     }
 
-    private var baseOffset: CGFloat {
-        switch state.panel {
+    private func panelOffset(for panel: GliderPanel) -> CGFloat {
+        switch panel {
         case .left: return drawerWidth
         case .center: return 0
         case .right: return -drawerWidth
@@ -242,23 +259,36 @@ private struct GliderPanelDragTargetModifier: ViewModifier {
             .onChanged { value in
                 let horizontal = value.translation.width
                 let vertical = value.translation.height
-                guard abs(horizontal) > abs(vertical) * 1.15 else { return }
-                dragOffset = clampedOffset(baseOffset + horizontal) - baseOffset
+                if dragStartOffset == nil {
+                    guard abs(horizontal) > abs(vertical) * 1.15 else { return }
+                    dragStartOffset = currentOffset
+                    isDragging = true
+                }
+                currentOffset = clampedOffset((dragStartOffset ?? currentOffset) + horizontal)
             }
             .onEnded { value in
-                let projected = baseOffset + value.predictedEndTranslation.width
+                guard let dragStartOffset else {
+                    isDragging = false
+                    return
+                }
+                let projected = dragStartOffset + value.predictedEndTranslation.width
                 let threshold = drawerWidth * 0.30
+                let targetPanel: GliderPanel
+
+                if projected > threshold {
+                    targetPanel = .left
+                } else if projected < -threshold {
+                    targetPanel = .right
+                } else {
+                    targetPanel = .center
+                }
 
                 withAnimation(.easeInOut(duration: 0.22)) {
-                    if projected > threshold {
-                        state.settle(to: .left)
-                    } else if projected < -threshold {
-                        state.settle(to: .right)
-                    } else {
-                        state.settle(to: .center)
-                    }
-                    dragOffset = 0
+                    state.settle(to: targetPanel)
+                    currentOffset = panelOffset(for: targetPanel)
+                    isDragging = false
                 }
+                self.dragStartOffset = nil
             }
     }
 }
@@ -267,13 +297,15 @@ private extension View {
     func gliderPanelDragTarget(
         state: GliderScaffoldState,
         drawerWidth: CGFloat,
-        dragOffset: Binding<CGFloat>
+        currentOffset: Binding<CGFloat>,
+        isDragging: Binding<Bool>
     ) -> some View {
         modifier(
             GliderPanelDragTargetModifier(
                 state: state,
                 drawerWidth: drawerWidth,
-                dragOffset: dragOffset
+                currentOffset: currentOffset,
+                isDragging: isDragging
             )
         )
     }
