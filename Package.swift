@@ -15,10 +15,14 @@ let package = Package(
         )
     ],
     targets: [
-        .target(name: "GliderNav"),
+        .target(
+            name: "GliderNav",
+            path: "ios/library/Sources/GliderNav"
+        ),
         .testTarget(
             name: "GliderNavTests",
-            dependencies: ["GliderNav"]
+            dependencies: ["GliderNav"],
+            path: "ios/library/Tests/GliderNavTests"
         )
     ]
 )

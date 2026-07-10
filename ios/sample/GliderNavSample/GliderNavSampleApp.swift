@@ -5,7 +5,7 @@ import GliderNav
 struct GliderNavSampleApp: App {
     var body: some Scene {
         WindowGroup {
-            SampleRootView()
+            SampleRootView(autoDemo: ProcessInfo.processInfo.arguments.contains("--demo-video"))
         }
     }
 }

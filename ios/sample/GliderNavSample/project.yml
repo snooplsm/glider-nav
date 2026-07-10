@@ -1,0 +1,25 @@
+name: GliderNavSample
+options:
+  bundleIdPrefix: one.adverse.glider
+  deploymentTarget:
+    iOS: "15.0"
+packages:
+  GliderNav:
+    path: ../../..
+targets:
+  GliderNavSample:
+    type: application
+    platform: iOS
+    sources:
+      - path: .
+        excludes:
+          - README.md
+          - project.yml
+    dependencies:
+      - package: GliderNav
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: one.adverse.glider.sample.ios
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES

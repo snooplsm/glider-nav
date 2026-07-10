@@ -1,12 +1,23 @@
 # GliderNav
 
+## Demo
+
+| iOS | Android |
+| --- | --- |
+| <video src="docs/media/glider-nav-ios.mp4" controls muted playsinline width="360"></video> | <video src="docs/media/glider-nav-android.mp4" controls muted playsinline width="360"></video> |
+
 Reusable Android and SwiftUI navigation primitives extracted from Motormed.
 
 The Android package/namespace is `one.adverse.glider`. The Swift package module is `GliderNav`.
 
-## Demo
+## Repository Layout
 
-<video src="docs/media/glider-nav-android.mp4" controls muted playsinline width="360"></video>
+```text
+android/library  Android library module
+android/sample   Android sample app
+ios/library      Swift package sources and tests
+ios/sample       SwiftUI sample app source
+```
 
 ## What It Includes
 
@@ -20,16 +31,21 @@ The Android package/namespace is `one.adverse.glider`. The Swift package module 
 Android sample app:
 
 ```bash
-./gradlew :samples:android:installDebug
+./gradlew :android:sample:installDebug
 ```
 
 iOS sample app source lives at:
 
 ```text
-samples/ios/GliderNavSample
+ios/sample/GliderNavSample
 ```
 
-Create a new iOS app target in Xcode, add this repo as a local Swift package, then add the sample Swift files to the app target.
+Generate and open the iOS sample project:
+
+```bash
+xcodegen generate --spec ios/sample/GliderNavSample/project.yml
+open ios/sample/GliderNavSample/GliderNavSample.xcodeproj
+```
 
 ## Android
 
@@ -109,21 +125,21 @@ GliderScaffold(
 Build locally:
 
 ```bash
-./gradlew :glider-nav-android:assembleDebug
-./gradlew :samples:android:assembleDebug
+./gradlew :android:library:assembleDebug
+./gradlew :android:sample:assembleDebug
 ```
 
 Publish to Maven local:
 
 ```bash
-./gradlew :glider-nav-android:publishToMavenLocal
+./gradlew :android:library:publishToMavenLocal
 ```
 
 Publish to GitHub Packages:
 
 ```bash
 GITHUB_ACTOR=snooplsm GITHUB_TOKEN=<token-with-write-packages> \
-  ./gradlew :glider-nav-android:publishReleasePublicationToGitHubPackagesRepository
+  ./gradlew :android:library:publishReleasePublicationToGitHubPackagesRepository
 ```
 
 Coordinate:

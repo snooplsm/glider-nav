@@ -15,5 +15,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "glider-nav"
-include(":glider-nav-android")
-include(":samples:android")
+include(":android:library")
+include(":android:sample")

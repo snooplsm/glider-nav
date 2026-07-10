@@ -2,6 +2,8 @@ import SwiftUI
 import GliderNav
 
 struct SampleRootView: View {
+    let autoDemo: Bool
+
     @StateObject private var glider = GliderScaffoldState()
     @State private var selection = 0
     @State private var assist = 48.0
@@ -40,6 +42,14 @@ struct SampleRootView: View {
             },
             rightPanel: { SamplePanel(title: "Ride Tools", tint: theme.gradientEnd) }
         )
+        .task {
+            guard autoDemo else { return }
+            await runAutoDemo()
+        }
+    }
+
+    init(autoDemo: Bool = false) {
+        self.autoDemo = autoDemo
     }
 
     @ViewBuilder
@@ -76,6 +86,55 @@ struct SampleRootView: View {
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 14)
+    }
+
+    @MainActor
+    private func runAutoDemo() async {
+        while !Task.isCancelled {
+            await sleep(seconds: 0.7)
+            withAnimation(.easeInOut(duration: 0.35)) {
+                glider.openLeft()
+            }
+
+            await sleep(seconds: 1.15)
+            withAnimation(.easeInOut(duration: 0.35)) {
+                glider.close()
+            }
+
+            await sleep(seconds: 0.7)
+            withAnimation(.easeInOut(duration: 0.25)) {
+                selection = 1
+                assist = 78
+                regen = 36
+            }
+
+            await sleep(seconds: 1.05)
+            withAnimation(.easeInOut(duration: 0.25)) {
+                selection = 2
+            }
+
+            await sleep(seconds: 1.05)
+            withAnimation(.easeInOut(duration: 0.35)) {
+                glider.openRight()
+            }
+
+            await sleep(seconds: 1.15)
+            withAnimation(.easeInOut(duration: 0.35)) {
+                glider.close()
+            }
+
+            await sleep(seconds: 0.7)
+            withAnimation(.easeInOut(duration: 0.25)) {
+                selection = 0
+                assist = 48
+                regen = 22
+            }
+        }
+    }
+
+    private func sleep(seconds: Double) async {
+        let nanoseconds = UInt64(seconds * 1_000_000_000)
+        try? await Task.sleep(nanoseconds: nanoseconds)
     }
 
     private var monitorPage: some View {
