@@ -5,12 +5,11 @@ plugins {
 }
 
 val isJitPackBuild = System.getenv("JITPACK") == "true"
-val jitPackGroup = listOfNotNull(System.getenv("GROUP"), System.getenv("ARTIFACT"))
-    .joinToString(".")
-    .ifBlank { "com.github.snooplsm.glider-nav" }
+val jitPackGroup = System.getenv("GROUP") ?: "com.github.snooplsm"
+val jitPackArtifact = System.getenv("ARTIFACT") ?: "glider-nav"
 
 group = if (isJitPackBuild) jitPackGroup else "one.adverse.glider"
-version = if (isJitPackBuild) (System.getenv("VERSION") ?: "v0.1.3") else "0.1.3"
+version = if (isJitPackBuild) (System.getenv("VERSION") ?: "v0.1.4") else "0.1.4"
 
 android {
     namespace = "one.adverse.glider"
@@ -55,7 +54,7 @@ publishing {
     publications {
         register<MavenPublication>("release") {
             groupId = project.group.toString()
-            artifactId = "glider-nav"
+            artifactId = if (isJitPackBuild) jitPackArtifact else "glider-nav"
             version = project.version.toString()
 
             afterEvaluate {

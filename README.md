@@ -66,7 +66,7 @@ Then add the dependency:
 
 ```kotlin
 dependencies {
-    implementation("com.github.snooplsm.glider-nav:glider-nav:v0.1.3")
+    implementation("com.github.snooplsm:glider-nav:v0.1.4")
 }
 ```
 
@@ -130,14 +130,14 @@ Publish to Maven local:
 Create a release for JitPack:
 
 ```bash
-git tag v0.1.3
-git push origin v0.1.3
+git tag v0.1.4
+git push origin v0.1.4
 ```
 
 Coordinate:
 
 ```kotlin
-implementation("com.github.snooplsm.glider-nav:glider-nav:v0.1.3")
+implementation("com.github.snooplsm:glider-nav:v0.1.4")
 ```
 
 ## SwiftUI
