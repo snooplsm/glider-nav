@@ -49,7 +49,7 @@ open ios/sample/GliderNavSample/GliderNavSample.xcodeproj
 
 ## Android
 
-Add the GitHub Packages Maven repository in your app's `settings.gradle.kts`:
+Add JitPack in your app's `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {
@@ -57,24 +57,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url = uri("https://maven.pkg.github.com/snooplsm/glider-nav")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR") ?: "YOUR_GITHUB_USERNAME"
-                password = System.getenv("GITHUB_TOKEN") ?: "YOUR_GITHUB_TOKEN"
-            }
-        }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 ```
-
-GitHub Packages requires a GitHub token for Maven access. Use `read:packages` when consuming the library and `write:packages` when publishing it.
 
 Then add the dependency:
 
 ```kotlin
 dependencies {
-    implementation("one.adverse.glider:glider-nav:0.1.2")
+    implementation("com.github.snooplsm.glider-nav:glider-nav:v0.1.3")
 }
 ```
 
@@ -135,17 +127,17 @@ Publish to Maven local:
 ./gradlew :android:library:publishToMavenLocal
 ```
 
-Publish to GitHub Packages:
+Create a release for JitPack:
 
 ```bash
-GITHUB_ACTOR=snooplsm GITHUB_TOKEN=<token-with-write-packages> \
-  ./gradlew :android:library:publishReleasePublicationToGitHubPackagesRepository
+git tag v0.1.3
+git push origin v0.1.3
 ```
 
 Coordinate:
 
 ```kotlin
-implementation("one.adverse.glider:glider-nav:0.1.2")
+implementation("com.github.snooplsm.glider-nav:glider-nav:v0.1.3")
 ```
 
 ## SwiftUI
